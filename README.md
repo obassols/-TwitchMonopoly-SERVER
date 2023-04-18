@@ -16,6 +16,3 @@ Finalment ja podràs executar la comanda `npm start`.
 Seguidament hauràs de crear la base de dades pel que et conectaràs al pgadmin del docker al link `http://localhost:5050/`
 El nom d'usuari i la contrasenya depenen del fitxer `.env` que haguis creat a la carpeta docker.
 Despres per afegir el servidor la connexio és `host.docker.internal`, el nom d'usuari i contrasenya que també estigui al fitxer `.env`
-
-## Crear les taules
-Les taules es creen automaticament a partir dels fitxer dins la carpeta docker.
