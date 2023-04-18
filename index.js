@@ -11,7 +11,7 @@ require("dotenv").config();
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
-// Import the account routes
+/* // Import the account routes
 const accountRoutes = require("./routes/account");
 app.use("/account", accountRoutes);
 
@@ -25,7 +25,7 @@ app.use("/square", squareRoutes);
 
 // Import the card routes
 const cardRoutes = require("./routes/card");
-app.use("/card", cardRoutes);
+app.use("/card", cardRoutes); */
 
 // Obtenir el port del fitxer .env
 const port = process.env.SERVER_PORT;
