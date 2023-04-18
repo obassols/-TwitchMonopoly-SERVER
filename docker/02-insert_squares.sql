@@ -252,7 +252,7 @@ INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (38, 4, 1300);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (38, 5, 1500);
 
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (39, 'Luxury Tax', 'LT', 'tax');
-INSERT INTO TAX (square_id, price) VALUES (39, 100);
+INSERT INTO TAX (square_id, amount) VALUES (39, 100);
 
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (40, 'Boardwalk', 'BW', 'property');
 INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (40, 'dark_blue', 400, 200);

@@ -1,4 +1,5 @@
 docker-database
+docker-pgadmin
 .env
 
 node_modules

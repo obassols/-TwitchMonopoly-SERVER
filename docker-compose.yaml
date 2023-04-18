@@ -1,9 +1,5 @@
 services:
-
   postgres:
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: postgres:latest
     container_name: postgres
     env_file:
@@ -14,6 +10,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWD}
       - PGDATA=/data/postgres-monopoly
     volumes:
+      - ./docker/*.sql /docker-entrypoint-initdb.d/
       - ./docker/docker-database/:/data/postgres-monopoly
     ports:
       - '5432:5432'
@@ -27,9 +24,6 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWD}
     volumes:
-       - pgadmin:/var/lib/pgadmin
+       - ./docker/docker-pgadmin:/var/lib/pgadmin
     ports:
       - "5050:80"
-
-volumes:
-  pgadmin:
