@@ -1,4 +1,4 @@
-# Backend
+# API
 
 ## Docker Desktop
 Per poder usar el backend primer necesites engegar el Docker Desktop, seguidament ja podràs executar la comanda
