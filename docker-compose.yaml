@@ -14,7 +14,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWD}
       - PGDATA=/data/postgres-monopoly
     volumes:
-      - ./docker-database/:/data/postgres-monopoly
+      - ./docker/docker-database/:/data/postgres-monopoly
     ports:
       - '5432:5432'
 
