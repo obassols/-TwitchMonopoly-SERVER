@@ -1,4 +1,4 @@
-const  Database = require('../models/Database');
+const Database = require('../models/Database');
 const db = Database.getInstance();
 
 const getAccount = (async (email) => {
