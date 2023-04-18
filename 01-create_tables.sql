@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS PLAYER (
   game_id INT NOT NULL,
   name VARCHAR(255) NOT NULL,
   money INT NOT NULL,
+  jail BOOLEAN NOT NULL,
   role VARCHAR(50) NOT NULL,
   PRIMARY KEY (position, game_id),
   FOREIGN KEY (game_id) REFERENCES GAME(id)
@@ -133,7 +134,7 @@ CREATE TABLE IF NOT EXISTS TAX (
 
 CREATE TABLE IF NOT EXISTS JAIL (
   square_id INT NOT NULL,
-  exit_price INT NOT NULL,
+  exit_cost INT NOT NULL,
   PRIMARY KEY (square_id),
   FOREIGN KEY (square_id) REFERENCES SQUARE(id)
 );

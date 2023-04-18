@@ -61,7 +61,7 @@ INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (10, 4, 450);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (10, 5, 600);
 
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (11, 'Jail', 'J', 'jail');
-INSERT INTO JAIL (square_id, exit_price) VALUES (11, 50);
+INSERT INTO JAIL (square_id, exit_cost) VALUES (11, 50);
 
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (12, 'St. Charles Place', 'SCP', 'property');
 INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (12, 'pink', 140, 100);
