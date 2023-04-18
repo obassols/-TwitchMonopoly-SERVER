@@ -1,14 +1,17 @@
 services:
+
   postgres:
     build:
       context: .
       dockerfile: Dockerfile
     image: postgres:latest
     container_name: postgres
+    env_file:
+    - .env
     environment:
-      - POSTGRES_DB=monopolytwitch
-      - POSTGRES_USER=obassols
-      - POSTGRES_PASSWORD=oriolbn20
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWD}
       - PGDATA=/data/postgres-monopoly
     volumes:
       - ./docker-database/:/data/postgres-monopoly
@@ -18,9 +21,11 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
+    env_file:
+    - .env
     environment:
-      PGADMIN_DEFAULT_EMAIL: obassols@boscdelacoma.cat
-      PGADMIN_DEFAULT_PASSWORD: oriolbn20
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWD}
     volumes:
        - pgadmin:/var/lib/pgadmin
     ports:
