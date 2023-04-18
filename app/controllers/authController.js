@@ -9,7 +9,7 @@ const login = (async (req, res) => {
     // Check if fields are empty
     if (req.body.email && req.body.password) {
       // Check if account exists
-      const account = await db.getAccount(req.body.email);
+      const account = await db.get(req.body.email);
       if (!account) res.status(404).send('Email or password not valid');
       else {
 
