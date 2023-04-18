@@ -1,13 +1,21 @@
 # API
 
 ## Docker Desktop
-Per poder usar el backend primer necesites engegar el Docker Desktop, seguidament ja podràs executar la comanda
-`npm start`
+
+Per poder usar l'api amb la base de dades primer necesites engegar el Docker Desktop.
+També has de crear un fitxer `.env` dins la carpeta docker que contigui les següents variables:
+- `POSTGRES_DB=database`
+- `POSTGRES_USER=username`
+- `POSTGRES_PASSWD=password`
+- `PGADMIN_EMAIL=email@email.com`
+- `PGADMIN_PASSWD=password`
+
+Finalment ja podràs executar la comanda `npm start`.
 
 ## Accedir al pgadmin
 Seguidament hauràs de crear la base de dades pel que et conectaràs al pgadmin del docker al link `http://localhost:5050/`
-El nom d'usuari és `obassols@boscdelacoma.cat` i la contrasenya `oriolbn20`.
-Despres per afegir el servidor la connexio és `host.docker.internal`, el nom d'usuari `obassols` i la contrasenya `oriolbn20`
+El nom d'usuari i la contrasenya depenen del fitxer `.env` que haguis creat a la carpeta docker.
+Despres per afegir el servidor la connexio és `host.docker.internal`, el nom d'usuari i contrasenya que també estigui al fitxer `.env`
 
 ## Crear les taules
-Finalment crees la base de dades `TwitchMonopolyDB` i allà a la Query Tool enganxes el fitxer `Database.sql`
+Les taules es creen automaticament a partir dels fitxer dins la carpeta docker.
