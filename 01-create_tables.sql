@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS ACCOUNT (
 CREATE TABLE IF NOT EXISTS GAME (
   id SERIAL NOT NULL,
   account_email VARCHAR(255) NOT NULL,
+  taxes INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (account_email) REFERENCES ACCOUNT(email)
 );
@@ -25,7 +26,7 @@ CREATE TABLE IF NOT EXISTS PLAYER (
   game_id INT NOT NULL,
   name VARCHAR(255) NOT NULL,
   money INT NOT NULL,
-  streamer boolean NOT NULL,
+  role VARCHAR(50) NOT NULL,
   PRIMARY KEY (position, game_id),
   FOREIGN KEY (game_id) REFERENCES GAME(id)
 );
@@ -34,7 +35,46 @@ CREATE TABLE IF NOT EXISTS PLAYER (
 CREATE TABLE IF NOT EXISTS CARD (
   id SERIAL NOT NULL,
   description TEXT NOT NULL,
+  type VARCHAR(255) NOT NULL,
+  action VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS PAY_CARD (
+  card_id INT NOT NULL,
+  amount INT NOT NULL,
+  target VARCHAR(255) NOT NULL,
+  PRIMARY KEY (card_id),
+  FOREIGN KEY (card_id) REFERENCES CARD(id)
+);
+
+CREATE TABLE IF NOT EXISTS PAY_CONDITIONAL_CARD (
+  card_id INT NOT NULL,
+  amount_house INT NOT NULL,
+  amount_hotel INT NOT NULL,
+  PRIMARY KEY (card_id),
+  FOREIGN KEY (card_id) REFERENCES CARD(id)
+);
+
+CREATE TABLE IF NOT EXISTS ADVANCE_CARD (
+  card_id INT NOT NULL,
+  square INT NOT NULL,
+  PRIMARY KEY (card_id),
+  FOREIGN KEY (card_id) REFERENCES CARD(id)
+);
+
+CREATE TABLE IF NOT EXISTS ADVANCE_CONDITIONAL_CARD (
+  card_id INT NOT NULL,
+  amount INT NOT NULL,
+  PRIMARY KEY (card_id),
+  FOREIGN KEY (card_id) REFERENCES CARD(id)
+);
+
+CREATE TABLE IF NOT EXISTS FREE_JAIL_CARD (
+  card_id INT NOT NULL,
+  sell_price INT NOT NULL,
+  PRIMARY KEY (card_id),
+  FOREIGN KEY (card_id) REFERENCES CARD(id)
 );
 
 -- This table is used to store the habilities of the game
@@ -49,6 +89,8 @@ CREATE TABLE IF NOT EXISTS HABILITY (
 -- This table is used to store the squares of the game
 CREATE TABLE IF NOT EXISTS SQUARE (
   id SERIAL NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  short_name VARCHAR(50) NOT NULL,
   type VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -57,8 +99,6 @@ CREATE TABLE IF NOT EXISTS SQUARE (
 -- This table is used to store the properties of the game
 CREATE TABLE IF NOT EXISTS PROPERTY (
   square_id INT NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  short_name VARCHAR(255) NOT NULL,
   color VARCHAR(255) NOT NULL,
   price INT NOT NULL,
   house_price INT NOT NULL,
@@ -70,8 +110,6 @@ CREATE TABLE IF NOT EXISTS PROPERTY (
 -- This table is used to store the stations of the game
 CREATE TABLE IF NOT EXISTS STATION (
   square_id INT NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  short_name VARCHAR(255) NOT NULL,
   price INT NOT NULL,
   PRIMARY KEY (square_id),
   FOREIGN KEY (square_id) REFERENCES SQUARE(id)
@@ -81,9 +119,28 @@ CREATE TABLE IF NOT EXISTS STATION (
 -- This table is used to store the supplies of the game
 CREATE TABLE IF NOT EXISTS SUPPLY (
   square_id INT NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  short_name VARCHAR(255) NOT NULL,
   price INT NOT NULL,
+  PRIMARY KEY (square_id),
+  FOREIGN KEY (square_id) REFERENCES SQUARE(id)
+);
+
+CREATE TABLE IF NOT EXISTS TAX (
+  square_id INT NOT NULL,
+  amount INT NOT NULL,
+  PRIMARY KEY (square_id),
+  FOREIGN KEY (square_id) REFERENCES SQUARE(id)
+);
+
+CREATE TABLE IF NOT EXISTS JAIL (
+  square_id INT NOT NULL,
+  exit_price INT NOT NULL,
+  PRIMARY KEY (square_id),
+  FOREIGN KEY (square_id) REFERENCES SQUARE(id)
+);
+
+CREATE TABLE IF NOT EXISTS GO (
+  square_id INT NOT NULL,
+  amount INT NOT NULL,
   PRIMARY KEY (square_id),
   FOREIGN KEY (square_id) REFERENCES SQUARE(id)
 );
@@ -94,7 +151,7 @@ CREATE TABLE IF NOT EXISTS RENT_PRICE (
   square_id INT NOT NULL,
   upgrades INT NOT NULL,
   rent INT NOT NULL,
-  PRIMARY KEY (square_id),
+  PRIMARY KEY (square_id, upgrades),
   FOREIGN KEY (square_id) REFERENCES SQUARE(id)
 );
 
