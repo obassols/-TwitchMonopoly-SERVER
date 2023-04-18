@@ -9,12 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/obassols/TwitchMonopoly-SERVER.git"
+    "url": "git+https://github.com/obassols/TwitchMonopoly-API.git"
   },
   "author": "obassols",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/obassols/TwitchMonopoly-SERVER/issues"
+    "url": "https://github.com/obassols/TwitchMonopoly-API/issues"
   },
-  "homepage": "https://github.com/obassols/TwitchMonopoly-SERVER#readme"
+  "homepage": "https://github.com/obassols/TwitchMonopoly-API#readme",
+  "keywords": []
 }
