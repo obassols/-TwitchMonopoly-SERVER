@@ -11,10 +11,11 @@ require("dotenv").config();
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
-/* // Import the account routes
+// Import the account routes
 const accountRoutes = require("./routes/account");
 app.use("/account", accountRoutes);
 
+/*
 // Import the game routes
 const gameRoutes = require("./routes/game");
 app.use("/game", gameRoutes);
