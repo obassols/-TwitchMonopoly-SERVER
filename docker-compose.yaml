@@ -10,7 +10,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWD}
       - PGDATA=/data/postgres-monopoly
     volumes:
-      - ./docker/*.sql /docker-entrypoint-initdb.d/
+      - ./docker/scripts:/docker-entrypoint-initdb.d/
       - ./docker/docker-database/:/data/postgres-monopoly
     ports:
       - '5432:5432'
