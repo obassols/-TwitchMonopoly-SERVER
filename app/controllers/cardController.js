@@ -28,7 +28,7 @@ const get = (async (req, res) => {
 
 const getRandom = (async (req, res) => {
   try {
-    const card = await db.all();
+    const card = await db.allByType(req.params.type);
     const randomCard = card.rows[Math.floor(Math.random() * card.rows.length)];
     res.status(200).json(randomCard);
   } catch (err) {

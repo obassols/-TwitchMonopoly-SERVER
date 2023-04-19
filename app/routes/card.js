@@ -7,6 +7,6 @@ router.get('/', cardController.all);
 
 router.get('/:id', cardController.get);
 
-router.get('/random', cardController.getRandom);
+router.get('/random/:type', cardController.getRandom);
 
 module.exports = router;
