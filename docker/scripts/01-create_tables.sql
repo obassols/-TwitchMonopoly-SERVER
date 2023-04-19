@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS GAME (
   id SERIAL NOT NULL,
   account_email VARCHAR(255) NOT NULL,
   taxes INT NOT NULL,
+  turn INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (account_email) REFERENCES ACCOUNT(email)
 );
