@@ -35,6 +35,28 @@ const create = (async (game) => {
   }
 });
 
+const createPlayers = (async (streamer, gameId) => {
+  try {
+    const players = [];
+    for(let i = 0; i < 4; i++) {
+      query = 'INSERT INTO PLAYER (role, game_id, position) VALUES ($1, $2, $3) RETURNING *';
+      let values;
+      if (i === streamer - 1) {
+        values = ['streamer', gameId, i + 1];
+      } else {
+        values = ['chat', gameId, i + 1];
+      }
+      const newPlayer = await db.client.query(query, values);
+      players.push(newPlayer.rows[0]);
+    }
+    return players;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+      
+
 const update = (async (game) => {
   try {
     const query = 'UPDATE GAME SET taxes = $1, turn = $2 WHERE id = $3 RETURNING *';
@@ -86,6 +108,7 @@ module.exports = {
   allByAccount,
   get,
   create,
+  createPlayers,
   update,
   remove,
   getHistory,

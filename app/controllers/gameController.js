@@ -26,7 +26,9 @@ const create = (async (req, res) => {
   try {
     if (!req.body.email) return res.status(400).send('Empty fields');
     const game = await db.create(req.body.email);
-    res.status(200).json(game.rows);
+    const players = await db.createPlayers(req.body.streamer, game.rows[0].id);
+    game.players = players;
+    res.status(200).json(game);
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal server error');
