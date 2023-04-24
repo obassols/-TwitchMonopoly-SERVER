@@ -23,10 +23,16 @@ const get = (async (req, res) => {
   }
 });
 
-const getRent = (async (square) => {
-  const rent = await db.getRent(square.id, square.upgrades);
-  square.rent = rent ? rent.rows[0].rent : null;
-  return square;
+const getRent = (async (req, res) => {
+  try {
+    if (!req.params.id) return res.status(400).send('Empty fields');
+    const rent = await db.getRent(req.params.id, req.params.upgrades);
+    if (rent.rows.length === 0) return res.status(404).send('Rent not found');
+    res.status(200).json(rent.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal server error');
+  }
 });
 
 const getSubtype = (async square => {

@@ -7,4 +7,6 @@ router.get('/', squareController.all);
 
 router.get('/:id', squareController.get);
 
+router.get('/:id/rent/:upgrades', squareController.getRent);
+
 module.exports = router;
