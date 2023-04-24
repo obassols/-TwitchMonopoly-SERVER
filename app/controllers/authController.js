@@ -14,8 +14,7 @@ const login = (async (req, res) => {
       else {
 
         // Check if password is correct
-        const account = treballadors.rows[0];
-        if (await bcrypt.compare(req.body.passwd, account.passwd)) {
+        if (await bcrypt.compare(req.body.password, account.password)) {
 
           token.generateAccessToken({ email: account.email });
           token.generateRefreshToken({ email: account.email });
