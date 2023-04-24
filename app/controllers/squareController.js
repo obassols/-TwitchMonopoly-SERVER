@@ -23,6 +23,12 @@ const get = (async (req, res) => {
   }
 });
 
+const getRent = (async (square) => {
+  const rent = await db.getRent(square.id, square.upgrades);
+  square.rent = rent ? rent.rows[0].rent : null;
+  return square;
+});
+
 const getSubtype = (async square => {
   const squareActions = {
     property: 'getProperty',
@@ -44,4 +50,5 @@ const getSubtype = (async square => {
 module.exports = {
   all,
   get,
+  getRent,
 };

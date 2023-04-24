@@ -96,6 +96,17 @@ const getJail = (async (id) => {
   }
 });
 
+const getRent = (async (id, upgrades) => {
+  try {
+    const query = 'SELECT * FROM RENT_PRICE WHERE square_id = $1 AND upgrades = $2';
+    const values = [id, upgrades];
+    const rent = await db.client.query(query, values);
+    if (rent.rows.length > 0) return rent.rows[0];
+    else return null;
+  } catch (err) {
+    console.error(err);
+  }
+});
 
 module.exports = {
   all,
@@ -106,4 +117,5 @@ module.exports = {
   getTax,
   getGo,
   getJail,
+  getRent,
 };
