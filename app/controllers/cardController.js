@@ -28,13 +28,30 @@ const get = (async (req, res) => {
 
 const getRandom = (async (req, res) => {
   try {
-    const card = await db.allByType(req.params.type);
-    const randomCard = card.rows[Math.floor(Math.random() * card.rows.length)];
-    res.status(200).json(randomCard);
+    const cards = await db.allByType(req.params.type);
+    const randomCard = cards.rows[Math.floor(Math.random() * cards.rows.length)];
+    const card = await getSubtype(randomCard);
+    res.status(200).json(card);
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal server error');
   }
+});
+
+const getSubtype = (async card => {
+  const cardActions = {
+    'PAY': 'getPayCard',
+    'PAY_CONDITIONAL': 'getPayConditionalCard',
+    'ADVANCE': 'getAdvanceCard',
+    'ADVANCE_CONDITIONAL': 'getAdvanceConditionalCard',
+    'FREE_JAIL': 'getFreeJailCard',
+  };
+
+  const actionMethod = cardActions[card.action];
+  if (actionMethod) {
+    card[card.action.toLowerCase()] = await db[actionMethod](card.id);
+  }
+  return card;
 });
 
 module.exports = {
