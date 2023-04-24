@@ -57,10 +57,37 @@ const remove = (async (id) => {
   }
 });
 
+const getHistory = (async (id) => {
+  try {
+    const query = 'SELECT * FROM PLAYER_ACTION WHERE player_game_id = $1';
+    const values = [id];
+    const history = await db.client.query(query, values);
+    return history.rows;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+const addPlayerActions = (async (playerActions) => {
+  try {
+    const query = 'INSERT INTO PLAYER_ACTION (player_position, player_game_id, action) VALUES ($1, $2, $3) RETURNING *';
+    let actions = [];
+    await playerActions.actions.forEach(async action => {
+      const values = [playerActions.id, playerActions.position, action];
+      actions += await db.client.query(query, values);
+    });
+    return actions;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 module.exports = {
   allByAccount,
   get,
   create,
   update,
   remove,
+  getHistory,
+  addPlayerActions
 };
