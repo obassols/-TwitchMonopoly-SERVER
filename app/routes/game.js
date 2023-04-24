@@ -13,4 +13,8 @@ router.patch('/', gameController.update);
 
 router.delete('/:id', gameController.remove);
 
+router.get('/:id/history', gameController.getHistory);
+
+router.post('/history', gameController.addPlayerActions);
+
 module.exports = router;
