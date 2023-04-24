@@ -19,6 +19,7 @@ const get = (async (req, res) => {
   try {
     if (!req.params.email) return res.status(400).send('Empty fields');
     const account = await db.get(req.params.email);
+    if (!account) return res.status(404).send('Account not found');
     res.status(200).json(account.rows);
   } catch (err) {
     console.error(err);
