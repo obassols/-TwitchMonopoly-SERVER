@@ -24,10 +24,21 @@ const get = (async (id) => {
   }
 });
 
-const create = (async (game) => {
+const getPlayers = (async (id) => {
   try {
-    const query = 'INSERT INTO GAME (account_email, taxes, turn) VALUES ($1, $2, $3) RETURNING *';
-    const values = [game.accountEmail, game.taxes, game.turn];
+    const query = 'SELECT * FROM PLAYER WHERE game_id = $1';
+    const values = [id];
+    const players = await db.client.query(query, values);
+    return players.rows;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+const create = (async (email) => {
+  try {
+    const query = 'INSERT INTO GAME (id, account_email, taxes, turn) VALUES (DEFAULT, $1, $2, $3) RETURNING *';
+    const values = [email, 0, 1];
     const newGame = await db.client.query(query, values);
     return newGame.rows[0];
   } catch (err) {
@@ -35,21 +46,16 @@ const create = (async (game) => {
   }
 });
 
-const createPlayers = (async (streamer, gameId) => {
+const createPlayers = (async (players, gameId) => {
   try {
-    const players = [];
-    for(let i = 0; i < 4; i++) {
-      query = 'INSERT INTO PLAYER (role, game_id, position) VALUES ($1, $2, $3) RETURNING *';
-      let values;
-      if (i === streamer - 1) {
-        values = ['streamer', gameId, i + 1];
-      } else {
-        values = ['chat', gameId, i + 1];
-      }
+    const newPlayers = [];
+    for await (const [i, player] of players.entries()) {
+      const query = 'INSERT INTO PLAYER (position, game_id, name, money, jail, role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+      const values = [i + 1, gameId, player.name, 1500, false, player.role];
       const newPlayer = await db.client.query(query, values);
-      players.push(newPlayer.rows[0]);
+      newPlayers.push(newPlayer.rows[0]);
     }
-    return players;
+    return newPlayers;
   } catch (err) {
     console.error(err);
   }
@@ -74,6 +80,17 @@ const remove = (async (id) => {
     const values = [id];
     const deletedGame = await db.client.query(query, values);
     return deletedGame.rows[0];
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+const removePlayers = (async (id) => {
+  try {
+    const query = 'DELETE FROM PLAYER WHERE game_id = $1 RETURNING *';
+    const values = [id];
+    const deletedPlayers = await db.client.query(query, values);
+    return deletedPlayers.rows;
   } catch (err) {
     console.error(err);
   }
@@ -107,10 +124,12 @@ const addPlayerActions = (async (playerActions) => {
 module.exports = {
   allByAccount,
   get,
+  getPlayers,
   create,
   createPlayers,
   update,
   remove,
+  removePlayers,
   getHistory,
   addPlayerActions
 };

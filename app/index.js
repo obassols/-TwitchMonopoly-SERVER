@@ -15,7 +15,6 @@ app.use("/auth", authRoutes);
 const accountRoutes = require("./routes/account");
 app.use("/account", accountRoutes);
 
-/*
 // Import the game routes
 const gameRoutes = require("./routes/game");
 app.use("/game", gameRoutes);
@@ -26,7 +25,7 @@ app.use("/square", squareRoutes);
 
 // Import the card routes
 const cardRoutes = require("./routes/card");
-app.use("/card", cardRoutes); */
+app.use("/card", cardRoutes);
 
 // Obtenir el port del fitxer .env
 const port = process.env.SERVER_PORT;
