@@ -9,8 +9,8 @@ router.get('/:email', accountController.get);
 
 router.post('/', accountController.create);
 
-router.patch('/', accountController.update);
+router.patch('/:email', accountController.update);
 
-router.delete('/', accountController.remove);
+router.delete('/:email', accountController.remove);
 
 module.exports = router;

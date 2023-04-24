@@ -41,10 +41,10 @@ const create = (async (account) => {
   }
 });
 
-const update = (async (account) => {
+const update = (async (email, account) => {
   try {
     const query = 'UPDATE ACCOUNT SET password = $1, twitch_token = $2 WHERE email = $3 RETURNING *';
-    const values = [account.password, account.twitchToken, account.email];
+    const values = [account.password, account.twitchToken, email];
     const updatedAccount = await db.client.query(query, values);
     return updatedAccount.rows[0];
   } catch (err) {
