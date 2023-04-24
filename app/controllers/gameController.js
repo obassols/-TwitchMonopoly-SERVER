@@ -40,9 +40,9 @@ const create = (async (req, res) => {
 
 const update = (async (req, res) => {
   try {
-    if (!req.body.id) return res.status(400).send('Empty fields');
-    const game = await db.update(req.body);
-    const players = await db.updatePlayers(req.body.players, req.body.id);
+    if (!req.params.id) return res.status(400).send('Empty fields');
+    const game = await db.update(req.body, req.params.id);
+    const players = await db.updatePlayers(req.body.players, req.params.id);
     game.players = players;
     res.status(200).json(game);
   } catch (err) {
@@ -54,8 +54,8 @@ const update = (async (req, res) => {
 const remove = (async (req, res) => {
   try {
     if (!req.params.id) return res.status(400).send('Empty fields');
-    const game = await db.remove(req.params.id);
     const players = await db.removePlayers(req.params.id);
+    const game = await db.remove(req.params.id);
     game.players = players;
     res.status(200).json(game);
   } catch (err) {

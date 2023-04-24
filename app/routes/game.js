@@ -9,7 +9,7 @@ router.get('/:id', gameController.get);
 
 router.post('/', gameController.create);
 
-router.patch('/', gameController.update);
+router.patch('/:id', gameController.update);
 
 router.delete('/:id', gameController.remove);
 
