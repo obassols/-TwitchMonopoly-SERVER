@@ -61,14 +61,27 @@ const createPlayers = (async (players, gameId) => {
   }
 });
 
-      
-
 const update = (async (game) => {
   try {
     const query = 'UPDATE GAME SET taxes = $1, turn = $2 WHERE id = $3 RETURNING *';
     const values = [game.taxes, game.turn, game.id];
     const updatedGame = await db.client.query(query, values);
     return updatedGame.rows[0];
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+const updatePlayers = (async (players, gameId) => {
+  try {
+    const updatedPlayers = [];
+    for await (const player of players) {
+      const query = 'UPDATE PLAYER SET money = $1, jail = $2, WHERE game_id = $3 AND position = $4 RETURNING *';
+      const values = [player.money, player.jail, gameId, player.position];
+      const updatedPlayer = await db.client.query(query, values);
+      updatedPlayers.push(updatedPlayer.rows[0]);
+    }
+    return updatedPlayers;
   } catch (err) {
     console.error(err);
   }
@@ -128,6 +141,7 @@ module.exports = {
   create,
   createPlayers,
   update,
+  updatePlayers,
   remove,
   removePlayers,
   getHistory,

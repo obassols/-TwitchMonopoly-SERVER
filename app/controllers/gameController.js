@@ -42,6 +42,8 @@ const update = (async (req, res) => {
   try {
     if (!req.body.id) return res.status(400).send('Empty fields');
     const game = await db.update(req.body);
+    const players = await db.updatePlayers(req.body.players, req.body.id);
+    game.players = players;
     res.status(200).json(game);
   } catch (err) {
     console.error(err);
