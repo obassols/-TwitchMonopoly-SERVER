@@ -30,7 +30,7 @@ const get = (async (req, res) => {
 const create = (async (req, res) => {
   try {
     const account = await db.create(req.body);
-    res.status(201).json(account.rows);
+    res.status(201).json(account);
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal server error');
