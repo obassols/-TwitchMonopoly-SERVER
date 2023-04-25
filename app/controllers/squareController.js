@@ -10,6 +10,18 @@ const all = (async (req, res) => {
   }
 });
 
+const allByPlayer = (async (req, res) => {
+  try {
+    if (!req.params.id) return res.status(400).send('Empty fields');
+    const squares = await db.allByPlayer(req.params.gameId, req.params.postion);
+    if (squares.rows.length === 0) return res.status(404).send('Square not found');
+    return res.status(200).json(squares);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal server error');
+  }
+});
+
 const get = (async (req, res) => {
   try {
     if (!req.params.id) return res.status(400).send('Empty fields');
@@ -52,9 +64,34 @@ const getSubtype = (async square => {
   return square;
 });
 
+const addToPlayer = (async (req, res) => {
+  try {
+    if (!req.params.id || !req.params.playerId) return res.status(400).send('Empty fields');
+    const square = await db.addToPlayer(req.params.id);
+    return res.status(200).json(square);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+const removeFromPlayer = (async (req, res) => {
+  try {
+    if (!req.params.id || !req.params.playerId) return res.status(400).send('Empty fields');
+    const square = await db.removeFromPlayer(req.params.id);
+    return res.status(200).json(square);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal server error');
+  }
+});
+
 
 module.exports = {
   all,
+  allByPlayer,
   get,
   getRent,
+  addToPlayer,
+  removeFromPlayer,
 };

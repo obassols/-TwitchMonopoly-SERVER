@@ -12,6 +12,17 @@ const all = (async () => {
   }
 });
 
+const allByPlayer = (async (gameId, position) => {
+  try {
+    const query = 'SELECT * FROM PLAYER_SQUARE WHERE game_id = $1 AND position = $2';
+    const values = [gameId, position];
+    const squares = await db.client.query(query, values);
+    return squares.rows;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 const get = (async (id) => {
   try {
     const query = 'SELECT * FROM SQUARE WHERE id = $1';
@@ -108,8 +119,32 @@ const getRent = (async (id, upgrades) => {
   }
 });
 
+const addToPlayer = (async (gameId, position, squareId) => {
+  try {
+    const query = 'INSERT INTO PLAYER_SQUARE (game_id, player_id, position) VALUES ($1, $2, $3) RETURNING *';
+    const values = [gameId, position, squareId];
+    const square = await db.client.query(query, values);
+    return square.rows[0];
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+const removeFromPlayer = (async (gameId, position, squareId) => {
+  try {
+    const query = 'DELETE FROM PLAYER_SQUARE WHERE game_id = $1 AND player_id = $2 AND position = $3 RETURNING *';
+    const values = [gameId, position, squareId];
+    const square = await db.client.query(query, values);
+    return square.rows[0];
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+
 module.exports = {
   all,
+  allByPlayer,
   get,
   getProperty,
   getStation,
@@ -118,4 +153,6 @@ module.exports = {
   getGo,
   getJail,
   getRent,
+  addToPlayer,
+  removeFromPlayer
 };
