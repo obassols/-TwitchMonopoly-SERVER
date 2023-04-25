@@ -1,4 +1,4 @@
-export class Square {
+class Square {
   id;
   name;
   shortName;
@@ -7,7 +7,9 @@ export class Square {
   constructor(data) {
     this.id = data.id;
     this.name = data.name;
-    this.shortName = data.shortName;
+    this.shortName = data.short_name;
     this.type = data.type;
   }
 }
+
+module.exports = Square;

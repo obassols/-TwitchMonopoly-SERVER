@@ -1,9 +1,20 @@
 const db = require('../database/square');
+const PropertySquare = require('../models/Square/PropertySquare');
+const StationSquare = require('../models/Square/StationSquare');
+const GoSquare = require('../models/Square/GoSquare');
+const JailSquare = require('../models/Square/JailSquare');
+const SupplySquare = require('../models/Square/SupplySquare');
+const TaxSquare = require('../models/Square/TaxSquare');
+
 
 const all = (async (req, res) => {
   try {
     const squares = await db.all();
-    res.status(200).json(squares.rows);
+    const typedSquares = [];
+    for await (let square of squares) {
+      typedSquares.push(await getSubtype(square));
+    }
+    res.status(200).json(typedSquares);
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal server error');
@@ -48,19 +59,35 @@ const getRent = (async (req, res) => {
 });
 
 const getSubtype = (async square => {
-  const squareActions = {
-    property: 'getProperty',
-    station: 'getStation',
-    supply: 'getSupply',
-    tax: 'getTax',
-    go: 'getGo',
-    jail: 'getJail',
-  };
-
-  const actionMethod = squareActions[square.type];
-  if (actionMethod) {
-    square[square.type.toLowerCase()] = await db[actionMethod](square.id);
+  switch (square.type) {
+    case 'property':
+      square.subtype = await db.getProperty(square.id);
+      square = new PropertySquare(square);
+      break;
+    case 'station':
+      square.subtype = await db.getStation(square.id);
+      square = new StationSquare(square);
+      break;
+    case 'go':
+      square.subtype = await db.getGo(square.id);
+      square = new GoSquare(square);
+      break;
+    case 'jail':
+      square.subtype = await db.getJail(square.id);
+      square = new JailSquare(square);
+      break;
+    case 'supply':
+      square.subtype = await db.getSupply(square.id);
+      square = new SupplySquare(square);
+      break;
+    case 'tax':
+      square.subtype = await db.getTax(square.id);
+      square = new TaxSquare(square);
+      break;
+    default:
+      break;
   }
+  console.log(square);
   return square;
 });
 

@@ -1,8 +1,11 @@
-export class GoSquare extends Square {
+const Square = require('./Square');
+class GoSquare extends Square {
   amount;
 
   constructor(data) {
     super(data);
-    this.amount = data.amount;
+    this.amount = data.subtype.amount;
   }
 }
+
+module.exports = GoSquare;

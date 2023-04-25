@@ -63,7 +63,7 @@ const getSupply = (async (id) => {
   try {
     const query = 'SELECT * FROM SUPPLY WHERE square_id = $1';
     const values = [id];
-    const supply = await db.client.query(query, values);ç
+    const supply = await db.client.query(query, values);
     if (supply.rows.length > 0) return supply.rows[0];
     else return null;
   } catch (err) {

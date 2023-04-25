@@ -1,8 +1,11 @@
-export class TaxSquare extends Square {
-  cost;
+const Square = require('./Square');
+class TaxSquare extends Square {
+  amount;
 
   constructor(data) {
     super(data);
-    this.cost = data.cost;
+    this.amount = data.subtype.amount;
   }
 }
+
+module.exports = TaxSquare;

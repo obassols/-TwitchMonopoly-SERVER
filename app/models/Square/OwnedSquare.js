@@ -1,4 +1,4 @@
-export class OwnedSquare {
+class OwnedSquare {
   gameId;
   playerId;
   squareId;
