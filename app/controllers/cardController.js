@@ -1,4 +1,9 @@
 const db = require('../database/card');
+const AdvanceCard = require('../models/Card/AdvanceCard');
+const AdvanceConditionalCard = require('../models/Card/AdvanceConditionalCard');
+const FreeJailCard = require('../models/Card/FreeJailCard');
+const PayCard = require('../models/Card/PayCard');
+const PayConditionalCard = require('../models/Card/PayConditionalCard');
 
 const all = (async (req, res) => {
   try {
@@ -8,7 +13,14 @@ const all = (async (req, res) => {
     } else {
       cards = await db.all();
     }
-    res.status(200).json(cards.rows);
+    const typedCards = [];
+    if (cards.length === 0) return res.status(404).send('Card not found');
+    else {
+      for await (const card of cards) {
+        typedCards.push(await getSubtype(card));
+      }
+    }
+    return res.status(200).json(typedCards);
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal server error');
@@ -19,8 +31,14 @@ const allByPlayer = (async (req, res) => {
   try {
     if (!req.params.id) return res.status(400).send('Empty fields');
     const cards = await db.allByPlayer(req.params.gameId, req.params.postion);
+    const typedCards = [];
     if (cards.rows.length === 0) return res.status(404).send('Card not found');
-    return res.status(200).json(cards);
+    else {
+      for await (const card of cards) {
+        typedCards.push(await getSubtype(card));
+      }
+    }
+    return res.status(200).json(typedCards);
   } catch (err) {
     console.error(err);
   }
@@ -30,7 +48,9 @@ const get = (async (req, res) => {
   try {
     if (!req.params.id) return res.status(400).send('Empty fields');
     const card = await db.get(req.params.id);
-    res.status(200).json(card.rows);
+    if (card.rows.length === 0) return res.status(404).send('Card not found');
+    const typedCard = await getSubtype(card);
+    res.status(200).json(typedCard);
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal server error');
@@ -50,17 +70,29 @@ const getRandom = (async (req, res) => {
 });
 
 const getSubtype = (async card => {
-  const cardActions = {
-    'PAY': 'getPayCard',
-    'PAY_CONDITIONAL': 'getPayConditionalCard',
-    'ADVANCE': 'getAdvanceCard',
-    'ADVANCE_CONDITIONAL': 'getAdvanceConditionalCard',
-    'FREE_JAIL': 'getFreeJailCard',
-  };
-
-  const actionMethod = cardActions[card.action];
-  if (actionMethod) {
-    card[card.action.toLowerCase()] = await db[actionMethod](card.id);
+  switch (card.action) {
+    case 'PAY':
+      card.subtype = await db.getPayCard(card.id);
+      card = new PayCard(card);
+      break;
+    case 'PAY_CONDITIONAL':
+      card.subtype = await db.getPayConditionalCard(card.id);
+      card = new PayConditionalCard(card);
+      break;
+    case 'ADVANCE':
+      card.subtype = await db.getAdvanceCard(card.id);
+      card = new AdvanceCard(card);
+      break;
+    case 'ADVANCE_CONDITIONAL':
+      card.subtype = await db.getAdvanceConditionalCard(card.id);
+      card = new AdvanceConditionalCard(card);
+      break;
+    case 'FREE_JAIL':
+      card.subtype = await db.getFreeJailCard(card.id);
+      card = new FreeJailCard(card);
+      break;
+    default:
+      break;
   }
   return card;
 });

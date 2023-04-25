@@ -1,10 +1,14 @@
-export class PayConditionalCard extends Card {
+const Card = require('./Card');
+
+class PayConditionalCard extends Card {
   amountHouse;
   amountHotel;
 
   constructor(data) {
     super(data);
-    this.amountHouse = data.amountHouse;
-    this.amountHotel = data.amountHotel;
+    this.amountHouse = data.subtype.amountHouse;
+    this.amountHotel = data.subtype.amountHotel;
   }
 }
+
+module.exports = PayConditionalCard;

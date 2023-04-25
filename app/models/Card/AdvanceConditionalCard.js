@@ -1,8 +1,12 @@
-export class AdvanceConditionalCard extends Card {
-  moves;
+const Card = require('./Card');
+
+class AdvanceConditionalCard extends Card {
+  amount;
 
   constructor(data) {
     super(data);
-    this.moves = data.moves;
+    this.amount = data.subtype.amount;
   }
 }
+
+module.exports = AdvanceConditionalCard;

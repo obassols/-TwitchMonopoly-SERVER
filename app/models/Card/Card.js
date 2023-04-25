@@ -1,4 +1,4 @@
-export class Card {
+class Card {
   id;
   description;
   type;
@@ -11,3 +11,5 @@ export class Card {
     this.action = data.action;
   }
 }
+
+module.exports = Card;

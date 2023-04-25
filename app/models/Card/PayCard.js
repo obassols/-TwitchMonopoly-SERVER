@@ -1,12 +1,14 @@
-import { Card } from "./Card";
+const Card = require('./Card');
 
-export class PayCard extends Card {
+class PayCard extends Card {
   amount;
   target;
 
   constructor(data) {
     super(data);
-    this.amount = data.amount;
-    this.target = data.target;
+    this.amount = data.subtype.amount;
+    this.target = data.subtype.target;
   }
 }
+
+module.exports = PayCard;
