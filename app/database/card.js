@@ -107,6 +107,28 @@ const getFreeJailCard = (async (id) => {
   }
 });
 
+const addToPlayer = (async (gameId, position, id) => {
+  try {
+    const query = 'INSERT INTO PLAYER_CARD (game_id, position, card_id) VALUES ($1, $2, $3) RETURNING *';
+    const values = [gameId, position, id];
+    const addedCard = await db.client.query(query, values);
+    return addedCard.rows[0];
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+const removeFromPlayer = (async (gameId, position, id) => {
+  try {
+    const query = 'DELETE FROM PLAYER_CARD WHERE game_id = $1 AND position = $2 AND card_id = $3';
+    const values = [gameId, position, id];
+    const removedCard = await db.client.query(query, values);
+    return removedCard.rows[0];
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 module.exports = {
   all,
   allByType,
@@ -115,5 +137,7 @@ module.exports = {
   getPayConditionalCard,
   getAdvanceCard,
   getAdvanceConditionalCard,
-  getFreeJailCard
+  getFreeJailCard,
+  addToPlayer,
+  removeFromPlayer
 };
