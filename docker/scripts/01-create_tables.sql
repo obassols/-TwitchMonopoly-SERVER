@@ -20,19 +20,6 @@ CREATE TABLE IF NOT EXISTS GAME (
   FOREIGN KEY (account_email) REFERENCES ACCOUNT(email)
 );
 
--- RELATIONSHIP: game_id
--- This table is used to store the players of the game
-CREATE TABLE IF NOT EXISTS PLAYER (
-  position INT NOT NULL,
-  game_id INT NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  money INT NOT NULL,
-  jail BOOLEAN NOT NULL,
-  role VARCHAR(50) NOT NULL,
-  PRIMARY KEY (position, game_id),
-  FOREIGN KEY (game_id) REFERENCES GAME(id)
-);
-
 -- This table is used to store all the cards of the game
 CREATE TABLE IF NOT EXISTS CARD (
   id SERIAL NOT NULL,
@@ -86,6 +73,22 @@ CREATE TABLE IF NOT EXISTS HABILITY (
   description TEXT NOT NULL,
   base_cooldown INT NOT NULL,
   PRIMARY KEY (id)
+);
+
+-- RELATIONSHIP: game_id
+-- This table is used to store the players of the game
+CREATE TABLE IF NOT EXISTS PLAYER (
+  position INT NOT NULL,
+  game_id INT NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  money INT NOT NULL,
+  jail BOOLEAN NOT NULL,
+  role VARCHAR(50) NOT NULL,
+  hability_id INT,
+  cooldown INT,
+  PRIMARY KEY (position, game_id),
+  FOREIGN KEY (game_id) REFERENCES GAME(id),
+  FOREIGN KEY (hability_id) REFERENCES HABILITY(id)
 );
 
 -- This table is used to store the squares of the game
@@ -178,17 +181,6 @@ CREATE TABLE IF NOT EXISTS PLAYER_CARD (
   PRIMARY KEY (player_position, player_game_id, card_id),
   FOREIGN KEY (player_position, player_game_id) REFERENCES PLAYER(position, game_id),
   FOREIGN KEY (card_id) REFERENCES CARD(id)
-);
-
---RELATIONSHIP: player_position, player_game_id
--- This table is used to store the habilities of the player
-CREATE TABLE IF NOT EXISTS PLAYER_HABILITY (
-  player_position INT NOT NULL,
-  player_game_id INT NOT NULL,
-  hability_id INT NOT NULL,
-  cooldown INT NOT NULL,
-  PRIMARY KEY (player_position, player_game_id, hability_id),
-  FOREIGN KEY (player_position, player_game_id) REFERENCES PLAYER(position, game_id)
 );
 
 -- RELATIONSHIP: player_position, player_game_id, square_id
