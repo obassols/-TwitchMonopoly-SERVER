@@ -6,8 +6,8 @@ class PayConditionalCard extends Card {
 
   constructor(data) {
     super(data);
-    this.amountHouse = data.subtype.amountHouse;
-    this.amountHotel = data.subtype.amountHotel;
+    this.amountHouse = data.subtype.amount_house;
+    this.amountHotel = data.subtype.amount_hotel;
   }
 }
 

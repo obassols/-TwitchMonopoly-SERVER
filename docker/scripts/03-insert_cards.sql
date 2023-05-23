@@ -14,7 +14,7 @@ INSERT INTO CARD (id, description, type, action) VALUES (5, 'Pay for school fees
 INSERT INTO PAY_CARD (card_id, amount, target) VALUES (5, 150, 'BANK');
 
 INSERT INTO CARD (id, description, type, action) VALUES (6, 'Advance to Go. Collect $200', 'CHANCE', 'ADVANCE');
-INSERT INTO ADVANCE_CARD (card_id, square) VALUES (6, 0);
+INSERT INTO ADVANCE_CARD (card_id, square) VALUES (6, 1);
 
 INSERT INTO CARD (id, description, type, action) VALUES (7, 'Street repairs. $40 per house and $115 per hotel', 'CHANCE', 'PAY_CONDITIONAL');
 INSERT INTO PAY_CONDITIONAL_CARD (card_id, amount_house, amount_hotel) VALUES (7, 40, 115);
@@ -73,7 +73,7 @@ INSERT INTO CARD (id, description, type, action) VALUES (25, 'You recive a consu
 INSERT INTO PAY_CARD (card_id, amount, target) VALUES (25, -25, 'BANK');
 
 INSERT INTO CARD (id, description, type, action) VALUES (26, 'Advance to Go. Collect $200', 'COMMUNITY_CHEST', 'ADVANCE');
-INSERT INTO ADVANCE_CARD (card_id, square) VALUES (26, 0);
+INSERT INTO ADVANCE_CARD (card_id, square) VALUES (26, 1);
 
 INSERT INTO CARD (id, description, type, action) VALUES (27, 'Recive $100 for interest on your savings', 'COMMUNITY_CHEST', 'PAY');
 INSERT INTO PAY_CARD (card_id, amount, target) VALUES (27, -100, 'BANK');
@@ -81,7 +81,7 @@ INSERT INTO PAY_CARD (card_id, amount, target) VALUES (27, -100, 'BANK');
 INSERT INTO CARD (id, description, type, action) VALUES (28, 'Pay medical fees of $50', 'COMMUNITY_CHEST', 'PAY');
 INSERT INTO PAY_CARD (card_id, amount, target) VALUES (28, 50, 'BANK');
 
-INSERT INTO CARD (id, description, type, action) VALUES (29, 'Pay a $10 fine or take a chance', 'COMMUNITY_CHEST', 'PAY');
+INSERT INTO CARD (id, description, type, action) VALUES (29, 'Pay a $10 fine', 'COMMUNITY_CHEST', 'PAY');
 INSERT INTO PAY_CARD (card_id, amount, target) VALUES (29, 10, 'BANK');
 
 INSERT INTO CARD (id, description, type, action) VALUES (30, 'You have won second prize in a beauty contest. Collect $10', 'COMMUNITY_CHEST', 'PAY');

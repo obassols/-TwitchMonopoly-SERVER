@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS ACCOUNT (
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  twitch_token VARCHAR(255) NOT NULL,
+  twitch_channel VARCHAR(255) NOT NULL,
   PRIMARY KEY (email)
 );
 
@@ -78,15 +78,17 @@ CREATE TABLE IF NOT EXISTS HABILITY (
 -- RELATIONSHIP: game_id
 -- This table is used to store the players of the game
 CREATE TABLE IF NOT EXISTS PLAYER (
-  position INT NOT NULL,
+  id SERIAL NOT NULL,
   game_id INT NOT NULL,
   name VARCHAR(255) NOT NULL,
   money INT NOT NULL,
   jail BOOLEAN NOT NULL,
+  jail_turns INT NOT NULL,
   role VARCHAR(50) NOT NULL,
+  position INT NOT NULL,
   hability_id INT,
   cooldown INT,
-  PRIMARY KEY (position, game_id),
+  PRIMARY KEY (id, game_id),
   FOREIGN KEY (game_id) REFERENCES GAME(id),
   FOREIGN KEY (hability_id) REFERENCES HABILITY(id)
 );
@@ -165,32 +167,33 @@ CREATE TABLE IF NOT EXISTS RENT_PRICE (
 -- This table is used to store the actions of the player
 CREATE TABLE IF NOT EXISTS PLAYER_ACTION (
   id SERIAL NOT NULL,
-  player_position INT NOT NULL,
+  player_id INT NOT NULL,
   player_game_id INT NOT NULL,
   action VARCHAR(255) NOT NULL,
-  PRIMARY KEY (player_position, player_game_id, id),
-  FOREIGN KEY (player_position, player_game_id) REFERENCES PLAYER(position, game_id)
+  PRIMARY KEY (player_id, player_game_id, id),
+  FOREIGN KEY (player_id, player_game_id) REFERENCES PLAYER(id, game_id)
 );
 
 -- RELATIONSHIP: player_position, player_game_id, card_id
 -- This table is used to store the cards of the player
 CREATE TABLE IF NOT EXISTS PLAYER_CARD (
-  player_position INT NOT NULL,
+  player_id INT NOT NULL,
   player_game_id INT NOT NULL,
   card_id INT NOT NULL,
-  PRIMARY KEY (player_position, player_game_id, card_id),
-  FOREIGN KEY (player_position, player_game_id) REFERENCES PLAYER(position, game_id),
+  PRIMARY KEY (player_id, player_game_id, card_id),
+  FOREIGN KEY (player_id, player_game_id) REFERENCES PLAYER(id, game_id),
   FOREIGN KEY (card_id) REFERENCES CARD(id)
 );
 
 -- RELATIONSHIP: player_position, player_game_id, square_id
 -- This table is used to store the squares of the player like properties, stations or supplies
 CREATE TABLE IF NOT EXISTS PLAYER_SQUARE (
-  player_position INT NOT NULL,
+  player_id INT NOT NULL,
   player_game_id INT NOT NULL,
   square_id INT NOT NULL,
   upgrades INT NOT NULL,
-  PRIMARY KEY (player_position, player_game_id, square_id),
-  FOREIGN KEY (player_position, player_game_id) REFERENCES PLAYER(position, game_id),
+  state VARCHAR(255) NOT NULL,
+  PRIMARY KEY (player_id, player_game_id, square_id),
+  FOREIGN KEY (player_id, player_game_id) REFERENCES PLAYER(id, game_id),
   FOREIGN KEY (square_id) REFERENCES SQUARE(id)
 );

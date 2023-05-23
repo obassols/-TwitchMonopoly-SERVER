@@ -21,6 +21,21 @@ const all = (async (req, res) => {
   }
 });
 
+const allByGame = (async (req, res) => {
+  try {
+    if (!req.params.id) return res.status(400).send('Empty fields');
+    const squares = await db.allByGame(req.params.id);
+    const typedSquares = [];
+    for await (let square of squares) {
+      typedSquares.push(await getSubtype(square));
+    }
+    res.status(200).json(typedSquares);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal server error');
+  }
+});
+
 const allByPlayer = (async (req, res) => {
   try {
     if (!req.params.id) return res.status(400).send('Empty fields');
@@ -46,12 +61,24 @@ const get = (async (req, res) => {
   }
 });
 
+const getRents = (async (req, res) => {
+  try {
+    if (!req.params.id) return res.status(400).send('Empty fields');
+    const rents = await db.getRents(req.params.id);
+    if (!rents || rents.length === 0) return res.status(404).send('Rents not found');
+    res.status(200).json(rents);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal server error');
+  }
+});
+
 const getRent = (async (req, res) => {
   try {
     if (!req.params.id) return res.status(400).send('Empty fields');
     const rent = await db.getRent(req.params.id, req.params.upgrades);
-    if (rent.rows.length === 0) return res.status(404).send('Rent not found');
-    res.status(200).json(rent.rows[0]);
+    if (rent.length === 0) return res.status(404).send('Rent not found');
+    res.status(200).json(rent);
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal server error');
@@ -87,7 +114,6 @@ const getSubtype = (async square => {
     default:
       break;
   }
-  console.log(square);
   return square;
 });
 
@@ -116,8 +142,10 @@ const removeFromPlayer = (async (req, res) => {
 
 module.exports = {
   all,
+  allByGame,
   allByPlayer,
   get,
+  getRents,
   getRent,
   addToPlayer,
   removeFromPlayer,

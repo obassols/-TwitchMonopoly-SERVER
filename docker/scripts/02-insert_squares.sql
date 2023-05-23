@@ -32,7 +32,7 @@ INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (6, 3, 100);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (6, 4, 200);
 
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (7, 'Oriental Avenue', 'OA', 'property');
-INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (7, 'light_blue', 100, 50);
+INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (7, 'lightblue', 100, 50);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (7, 0, 6);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (7, 1, 30);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (7, 2, 90);
@@ -43,7 +43,7 @@ INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (7, 5, 550);
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (8, 'Chance', 'CH1', 'chance');
 
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (9, 'Vermont Avenue', 'VA1', 'property');
-INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (9, 'light_blue', 100, 50);
+INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (9, 'lightblue', 100, 50);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (9, 0, 6);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (9, 1, 30);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (9, 2, 90);
@@ -52,7 +52,7 @@ INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (9, 4, 400);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (9, 5, 550);
 
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (10, 'Connecticut Avenue', 'CA', 'property');
-INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (10, 'light_blue', 120, 50);
+INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (10, 'lightblue', 120, 50);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (10, 0, 8);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (10, 1, 40);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (10, 2, 100);
@@ -243,7 +243,7 @@ INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (36, 4, 200);
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (37, 'Chance', 'CH3', 'chance');
 
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (38, 'Park Place', 'PP', 'property');
-INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (38, 'dark_blue', 350, 200);
+INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (38, 'darkblue', 350, 200);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (38, 0, 35);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (38, 1, 175);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (38, 2, 500);
@@ -255,7 +255,7 @@ INSERT INTO SQUARE (id, name, short_name, type) VALUES (39, 'Luxury Tax', 'LT', 
 INSERT INTO TAX (square_id, amount) VALUES (39, 100);
 
 INSERT INTO SQUARE (id, name, short_name, type) VALUES (40, 'Boardwalk', 'BW', 'property');
-INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (40, 'dark_blue', 400, 200);
+INSERT INTO PROPERTY (square_id, color, price, house_price) VALUES (40, 'darkblue', 400, 200);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (40, 0, 50);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (40, 1, 200);
 INSERT INTO RENT_PRICE (square_id, upgrades, rent) VALUES (40, 2, 600);

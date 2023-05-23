@@ -60,7 +60,7 @@ const get = (async (req, res) => {
 const getRandom = (async (req, res) => {
   try {
     const cards = await db.allByType(req.params.type);
-    const randomCard = cards.rows[Math.floor(Math.random() * cards.rows.length)];
+    const randomCard = cards[Math.floor(Math.random() * cards.length)];
     const card = await getSubtype(randomCard);
     res.status(200).json(card);
   } catch (err) {

@@ -76,8 +76,8 @@ const updatePlayers = (async (players, gameId) => {
   try {
     const updatedPlayers = [];
     for await (const player of players) {
-      const query = 'UPDATE PLAYER SET money = $1, jail = $2 WHERE game_id = $3 AND position = $4 RETURNING *';
-      const values = [player.money, player.jail, gameId, player.position];
+      const query = 'UPDATE PLAYER SET money = $1, jail = $2, jail_turns = $3 WHERE game_id = $4 AND id = $5 RETURNING *';
+      const values = [player.money, player.jail, player.jailTime, gameId, player.id];
       const updatedPlayer = await db.client.query(query, values);
       updatedPlayers.push(updatedPlayer.rows[0]);
     }
